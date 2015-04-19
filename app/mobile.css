@@ -35,7 +35,7 @@ h1,h2,h3,h4 { margin:2px }
 #Menu li { float:left;margin:4px;list-style-type:none }
 
 .org {
-    border:1px gainsboro:solid;
+    border:1px gainsboro solid;
     margin: 4px 4px;
     padding:10px;
     background-color:#fefffc;
