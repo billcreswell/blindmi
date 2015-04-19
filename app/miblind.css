@@ -54,7 +54,7 @@ h1,h2,h3,h4 { margin:2px }
 #Menu li {display:inline;margin:4px;float:left;}
 
 .org {
-    border:1px gainsboro:solid;
+    border:1px gainsboro solid;
     margin: 4px 4px;
     padding:10px;
     color:#000033;
