@@ -11,8 +11,8 @@
 */
 
 // get requested page
-    if (isset($_REQUEST['page']) && $_REQUEST['page'] != '') {
-        $page = $_REQUEST['page'];
+    if (isset($_GET['page']) && $_GET['page'] != '') {
+        $page = (string)filter_input(INPUT_GET,$_GET['page']);
     } else {
         $page='home';
     }
@@ -21,11 +21,8 @@
  * Get Content
  * this will get the top level content
  */
-
-    function getContent($page)
-    {
+    function getContent($page) {
         switch ($page) {
-
         // Home Page Content
             case 'home':
             case 'index':
@@ -42,21 +39,20 @@
             case "newsletter":
             case "article":
             case "event":
-                if(isset($_REQUEST["issue"])) {
-                     $issuepage = "newsletters/" . $_REQUEST['issue'];
+                if(isset($_GET["issue"])) {
+                     $issuepage = "newsletters/" . (string) filter_input(INPUT_GET,$_GET['issue']);
                      $content = file_get_contents($issuepage);
-
-                } elseif(isset($_REQUEST["articleid"])) {
-                     $viewid = "articles/" . $_REQUEST['articleid'];
+                } elseif(isset($_GET["articleid"])) {
+                     $viewid = "articles/" . (string) filter_input(INPUT_GET,$_GET['articleid']);
                      $content = file_get_contents($viewid);
                  } elseif(isset($_REQUEST["eventid"])) {
-                     $viewid = "events/" . $_REQUEST['eventid'];
+                     $viewid = "events/" . (string) filter_input(INPUT_GET,$_GET['eventid']);
                      $content = file_get_contents($viewid);
                 } else {
                     $content = "no issue specified";
                 }
-
                 break;
+                
             case "articles":
                 $content = file_get_contents("pages/articles.html");
                 $content .= getDirList($page);
@@ -70,10 +66,14 @@
         return $content;
     }
 
-    function getMenuList()
-    {
+/**
+ * @brief Get Menu
+ * @return html
+ */
+    function getMenuList() {
         $menu = "<ul>";
-        if(isset($_REQUEST["page"]) && strtoupper($_REQUEST["page"]) != "mcbvi") {
+     // special case: rename mcbvi to home in the link
+        if(isset($_REQUEST["page"]) && strtoupper($_REQUEST["page"]) != "MCBVI") {
             $menu .= "<li><a href='/'>Home</a></li>";
         }
 
@@ -86,7 +86,7 @@
                 } elseif(isset($_REQUEST["page"]) && strtoupper($_REQUEST["page"]) === strtoupper($file['name'])) {
                     $menu.="<li>{$file['name']}</li>";
                 } else {
-                     $menu.="<li><a href='?page={$file['call']}'>{$file['name']}</a></li>";
+                    $menu.="<li><a href='?page={$file['call']}'>{$file['name']}</a></li>";
                 }
             }
         };
@@ -97,27 +97,31 @@ MCBVI on Facebook</a></li>";
         return $menu;
     }
 
-    function getDirList($dir)
-    {
-        $list = "";
+/**
+ * @brief Get a directory listing for Index pages
+ * @todo Cache
+ * @param string $dir directory name
+ * @return html
+ */
+    function getDirList($dir) {
+        $list = '';
         $dirlist = getFileList("$dir/", true,1);
-               if(isset($_REQUEST["page"]) && $_REQUEST["page"] === 'newsletters'){
-                foreach($dirlist as $file) {$sname[]=$file["name"];}
-
-                array_multisort($sname,SORT_DESC,$dirlist);
-          }
+        if(isset($_GET['page']) && $_GET['page'] === 'newsletters'){
+            foreach($dirlist as $file) {$sname[]=$file['name'];}
+            array_multisort($sname, SORT_DESC, $dirlist);
+        }
         foreach($dirlist as $file) {
-            $fname = "";
-            if ($file["type"] == "dir") {
-                $fname = ucwords(str_replace("_"," ", $file["name"]));
+            $fname = '';
+            if ($file['type'] == 'dir') {
+                $fname = ucwords(str_replace("_"," ", $file['name']));
                 $list .= "</ul><h3>{$fname}</h3><ul>";
             } else {
                 if(isset($_REQUEST["page"]) && $_REQUEST["page"] === 'newsletters'){
                     $issuepath = explode("/",$file["path"]);
                     $issue=$issuepath[1];
-
                     $list.="<li><a href='?page=newsletter&issue=$issue'>{$file['name']}</a></li>";
                 }elseif(isset($_REQUEST["page"]) && $_REQUEST["page"] === 'articles'){
+                // article list
                     if($file["type"]==="html") {
                     $issuepath = explode("/",$file["path"]);
                     $issue=$issuepath[1];
@@ -126,7 +130,8 @@ MCBVI on Facebook</a></li>";
                         $fname = $file["path"];
                         $list.="<li><a href='$fname'>{$file['name']}</a> ({$file['type']})</li>";
                     }
-                }elseif(isset($_REQUEST["page"]) && $_REQUEST["page"] === 'events'){
+                } elseif(isset($_REQUEST["page"]) && $_REQUEST["page"] === 'events'){
+                // event list
                     $issuepath = explode("/",$file["path"]);
                     $issue=$issuepath[1];
                     $list.="<li><a href='?page=event&eventid=$issue'>{$file['name']}</a></li>";
@@ -209,8 +214,11 @@ MCBVI on Facebook</a></li>";
         return $retval;
     }
 
-    function getFacebookContent()
-    {
+/**
+ * @brief Get the Contents of Blind MI Facebook page
+ * @return string html
+ */
+    function getFacebookContent() {
         try{
             $contents = '<h3>Facebook Content</h3>';
         // fake a browser header so facebook gives us rss
@@ -334,18 +342,18 @@ MCBVI on Facebook</a></li>";
 <body>
 <?php
 // Top Menu
-    if(isset($_REQUEST['page']) && ($_REQUEST['page'] != 'home')) {
+    if(isset($_GET['page']) && ($_GET['page'] != 'home')) {
 ?>
 
-<div id="Banner">
-    <a href="/">MCBVI</a>
-    <a href="#Menu">Skip to Menu</a>
-    <br style="clear:both"/>
+<div id='Banner'>
+    <a href='/'>MCBVI</a>
+    <a href='#Menu'>Skip to Menu</a>
+    <br style='clear:both'/>
 </div>
 
 <?php } ?>
 
-    <div id="Content">
+    <div id='Content' role='main'>
         <?php echo getContent($page); ?>
     </div>
 
@@ -354,8 +362,7 @@ MCBVI on Facebook</a></li>";
         <br style="clear:both"/>
     </div>
 
-
-   <script type="text/javascript">
+ <script type='text/javascript'>
 //<![CDATA[
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -365,7 +372,7 @@ MCBVI on Facebook</a></li>";
   ga('create', 'UA-55268114-1', 'auto');
   ga('send', 'pageview');
 //]]>
-    </script>
+ </script>
 
 </body>
 </html>
