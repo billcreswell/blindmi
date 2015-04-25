@@ -205,21 +205,20 @@ if($form!='') { ?>
         <legend>Communication Preferences</legend>
         <p>I prefer and MCBVI publications in:</p>
         <p>
+            <label>
+                <input type='checkbox' name='mcbvi_pub_preference_email'/>Get MCBVI Pubs by E-mail
+            </label>
             <label for='MC'>
-                <input type='checkbox' id='MC' name='mcbvi_pub_preference_cassette'/>Get MCBVI Pubs on Cassette
+                <input type='checkbox' id='MC' name='mcbvi_pub_preference_cassette'/>Get MCBVI Pubs on CD
             </label>
             <label for='MP'>
                 <input type='checkbox' id='MP' name='mcbvi_pub_preference_large_print'/>Get MCBVI Pubs in Large Print
             </label>
+            <br class='cb'/>
             <label>
                 <input type='checkbox' name='mcbvi_pub_preferecnce_braille'/>Get MCBVI Pubs in Braille
             </label>
-            <label>
-                <input type='checkbox' name='mcbvi_pub_preference_text'/>Get MCBVI Pubs on Computer Text files
-            </label>
-            <label>
-                <input type='checkbox' name='mcbvi_pub_preference_email'/>Get MCBVI Pubs on E-mail
-            </label>
+
         </p>
 
         <p>I would like to receive the ACB Braille Forum in:</p>
@@ -228,13 +227,17 @@ if($form!='') { ?>
                 <input type='checkbox' name='acb_forum_pub_preference_cassette'/>Get ACB Forum on Cassette
             </label>
             <label>
+                <input type='checkbox' name='acb_forum_pub_preference_cd'/>Get ACB Forum on CD
+            </label>
+            <label>
+                <input type='checkbox' name='acb_forum_pub_preference_podcast'/>Get ACB Forum on Podcast
+            </label>
+         <br class='cb'>
+            <label>
                 <input type='checkbox' name='acb_forum_pub_preference_large_print'/>Get ACB Forum in Large Print
             </label>
             <label>
                 <input type='checkbox' name='acb_forum_pub_preferecnce_braille'/>Get ACB Forum in Braille</label>
-            <label>
-                <input type='checkbox' name='acb_forum_pub_preference_text'/>Get ACB Forum in Computer Text files
-            </label>
             <label>
                 <input type='checkbox' name='acb_forum_pub_preference_email'/>Get ACB Forum by E-mail
             </label>
