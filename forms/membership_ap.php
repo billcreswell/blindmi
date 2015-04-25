@@ -8,7 +8,7 @@
 try {
     // config
     #  $email = "info@blindmi.org"; // recipient
-    $recipient_email = "info@blindmi.org"; // recipient
+    $recipient_email = "billcreswell@gmail.com"; // recipient
     $site = "BlindMI";
     $pagetitle = "Application for Membership";
     $submit_message = "Thank you for your interest  -your application has been submitted.";
@@ -110,7 +110,7 @@ try {
         <title>M C B V I Membership Application</title>
 
         <style type='text/css'>
-        body {font-size:16px;font-family:'Tahoma, Helvetica, San-serif'}
+        html, body, p, label {font:16px Tahoma, Helvetica, san-serif}
         #page {width:768px;}
         h1 {font: bold 32px 'Tahoma';line-height: 32px;}
         label, p, span {margin-left: 10px;margin-left: 10px;}
@@ -119,7 +119,7 @@ try {
         .cb {clear:both}
         @media print {
             input {border:none;border-bottom:1px gainsboro solid;}
-            input[type=button], input[type=submit] {display:none}
+            input[type=button], input[type=submit], printHide {display:none}
         }
         #Name, #Address, #City, #Email {width:22em}
         #State {width:2em}
@@ -132,6 +132,16 @@ try {
 
 <div id='page'>
 
+<?php 
+if($form!='') { ?>
+
+<form class='printHide' action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WJTLY5KB37DX2">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<?php }?>
 <h1>MCBVI Membership Application</h1>
 <p>
     If there is a local chapter in your area, we recommend joining through the chapter.
@@ -139,7 +149,8 @@ try {
     or by calling toll free to 1 888 956-2284, that’s 1 888 95M-CBVI.
 </p>
 </p>
-    You may also join as a member at large by completing this form:
+    You may also join as a member at large by completing this form.
+    Fields with an asterisk are required.
 </p>
 <?php echo $template['smessage'];?>
 
@@ -148,8 +159,8 @@ try {
     <fieldset>
         <legend>Your Contact Information</legend>
         <div class='iwrap'>
-            <label for='Name'>First and Last Name</label>
-            <input name='name' id='Name'/>
+            <label for='Name'>First and Last Name *</label>
+            <input name='name' id='Name' required='true'/>
         </div>
     
         <br class='cb'/>
@@ -160,8 +171,7 @@ try {
         </div>
 
         <br class='cb'/>
-        
-        
+           
         <div class='iwrap'>
             <label for='City'>City </label>
             <input name='city' id='City'/>
@@ -195,20 +205,39 @@ try {
         <legend>Communication Preferences</legend>
         <p>I prefer and MCBVI publications in:</p>
         <p>
-            <label><input type='checkbox' name='mcbvi_pub_preference_cassette'/>Cassette</label>
-            <label><input type='checkbox' name='mcbvi_pub_preference_large_print'/>Large Print</label>
-            <label><input type='checkbox' name='mcbvi_pub_preferecnce_braille'/>Braille</label>
-            <label><input type='checkbox' name='mcbvi_pub_preference_text'/>Computer Text files</label>
-            <label><input type='checkbox' name='mcbvi_pub_preference_email'/>E-mail.</label>
+            <label for='MC'>
+                <input type='checkbox' id='MC' name='mcbvi_pub_preference_cassette'/>Get MCBVI Pubs on Cassette
+            </label>
+            <label for='MP'>
+                <input type='checkbox' id='MP' name='mcbvi_pub_preference_large_print'/>Get MCBVI Pubs in Large Print
+            </label>
+            <label>
+                <input type='checkbox' name='mcbvi_pub_preferecnce_braille'/>Get MCBVI Pubs in Braille
+            </label>
+            <label>
+                <input type='checkbox' name='mcbvi_pub_preference_text'/>Get MCBVI Pubs on Computer Text files
+            </label>
+            <label>
+                <input type='checkbox' name='mcbvi_pub_preference_email'/>Get MCBVI Pubs on E-mail
+            </label>
         </p>
 
         <p>I would like to receive the ACB Braille Forum in:</p>
         <p>
-            <label><input type='checkbox' name='acb_forum_pub_preference_cassette'/>Cassette</label>
-            <label><input type='checkbox' name='acb_forum_pub_preference_large_print'/>Large Print</label>
-            <label><input type='checkbox' name='acb_forum_pub_preferecnce_braille'/>Braille</label>
-            <label><input type='checkbox' name='acb_forum_pub_preference_text'/>Computer Text files</label>
-            <label><input type='checkbox' name='acb_forum_pub_preference_email'/>E-mail.</label>
+            <label>
+                <input type='checkbox' name='acb_forum_pub_preference_cassette'/>Get ACB Forum on Cassette
+            </label>
+            <label>
+                <input type='checkbox' name='acb_forum_pub_preference_large_print'/>Get ACB Forum in Large Print
+            </label>
+            <label>
+                <input type='checkbox' name='acb_forum_pub_preferecnce_braille'/>Get ACB Forum in Braille</label>
+            <label>
+                <input type='checkbox' name='acb_forum_pub_preference_text'/>Get ACB Forum in Computer Text files
+            </label>
+            <label>
+                <input type='checkbox' name='acb_forum_pub_preference_email'/>Get ACB Forum by E-mail
+            </label>
         </p>
       
      </fieldset>
@@ -219,12 +248,14 @@ try {
         <label><input type='checkbox' name='check_payment_enclosed'/>I am sending my annual dues by check or money order</label>
         <p>Make checks payable to the MCBVI in the amount of $10</p>
         <label><input type='checkbox' name='check_online_payment'/>I will pay online</label>
-         <p>
-             <label><input type='checkbox' name='receipt_requested'/>Please return receipt for my tax deductible contribution.</label>
-        </p>
-        <p>Submit Form and Pay now by Paypal </p>
+        <label><input type='checkbox' name='receipt_requested'/>Please return receipt for my tax deductible contribution.</label>
+     
+    
+        <p class='printHide'>Submit Form and Pay now by Paypal </p>
         <input type='submit' value='Submit Form and Pay'/>
+        <p class='printHide'>The 'subscribe' button will be presented at the top of the page after submission</p>
         <p>Print and Return your MCBVI dues and completed membership application to:</p>
+   
         <p>
             All Needs Accounting<br/>
              Matt Livingston, Treasurer<br/>
@@ -234,6 +265,14 @@ try {
         
         <input type='button' value='print' onclick='window.print();return false;'/>
     </fieldset>
+</form>
+
+<h2>Pay Dues Online with Paypal</h2>
+<form class='printHide' action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WJTLY5KB37DX2">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
 
 </div>
