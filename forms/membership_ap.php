@@ -110,124 +110,132 @@ try {
         <title>M C B V I Membership Application</title>
 
         <style type='text/css'>
-        body {margin-top: 0px;margin-left: 0px;}
-        #page {position:relative; margin: 48px 0px 117px 48px;padding: 0;border: none;width: 768px;}
+        body {font-size:16px;font-family:'Tahoma, Helvetica, San-serif'}
+        #page {width:768px;}
         h1 {font: bold 32px 'Tahoma';line-height: 32px;}
-        label, p, span {margin-left: 10px;font: 16px 'Tahoma';margin-left: 10px;line-height: 19px;}
+        label, p, span {margin-left: 10px;margin-left: 10px;}
         input {margin-left: 5px}
+        .iwrap{float:left;padding:2px}.iwrap label{display:block}
+        .cb {clear:both}
+        @media print {
+            input {border:none;border-bottom:1px gainsboro solid;}
+            input[type=button], input[type=submit] {display:none}
+        }
+        #Name, #Address, #City, #Email {width:22em}
+        #State {width:2em}
+        #Zip {width:9em}
         </style>
 
     </head>
 
 <body >
 
-
 <div id='page'>
 
-
 <h1>MCBVI Membership Application</h1>
-
+<p>
+    If there is a local chapter in your area, we recommend joining through the chapter.
+    Learn more about <a href='/?page=chapters'>local chapters on our website</a>,
+    or by calling toll free to 1 888 956-2284, that’s 1 888 95M-CBVI.
+</p>
+</p>
+    You may also join as a member at large by completing this form:
+</p>
 <?php echo $template['smessage'];?>
 
 <form method='post'>
-<h2>Your Information</h2>
 
-<p>
-    <label>Name <input name='name' id='Name' /></label>
-</p>
+    <fieldset>
+        <legend>Your Contact Information</legend>
+        <div class='iwrap'>
+            <label for='Name'>First and Last Name</label>
+            <input name='name' id='Name'/>
+        </div>
+    
+        <br class='cb'/>
+                
+        <div class='iwrap'>
+            <label for='Address'>Address</label>
+            <input name='address' id='Address'/>
+        </div>
 
-<p>
-    <label>Address <input name='address' id='Address'/></label>
-    <label>City <input name='city' id='City'/></label>
-    <label>Zip Code <input name='postal_code' id='Zip'/></label>
-</p>
+        <br class='cb'/>
+        
+        
+        <div class='iwrap'>
+            <label for='City'>City </label>
+            <input name='city' id='City'/>
+        </div>
 
-<p>
-    <label>Phone <input type='tel' name='phone' id='Phone'/></label>
-    <label>Email (Optional)<input type='email' name='email' id='Email'/></label>
-</p>
+        <div class='iwrap'>
+            <label for='State'>State</label>
+            <input name='state' id='State'/>
+        </div>
+        
+        <div class='iwrap'>
+            <label for='Zip'>Zip Code</label>
+            <input name='postal_code' id='Zip'/>
+        </div>
 
-<p>Please check your preferences.</p>
-<p>
-    <label> <input type='checkbox' name='contact_me_for_more_information' id='ContactMe'/>
-    I would like to be contacted for more information.</label>
-</p>
+        <br class='cb'/>
+        
+        <div class='iwrap'>
+            <label for='Phone'>Phone</label>
+            <input type='tel' name='phone' id='Phone'/>
+        </div>
+        
+        <div class='iwrap'>
+            <label for='Email'>Email</label>
+            <input type='email' name='email' id='Email'/>
+        </div>
+        
+    </fieldset>
+    
+     <fieldset>
+        <legend>Communication Preferences</legend>
+        <p>I prefer and MCBVI publications in:</p>
+        <p>
+            <label><input type='checkbox' name='mcbvi_pub_preference_cassette'/>Cassette</label>
+            <label><input type='checkbox' name='mcbvi_pub_preference_large_print'/>Large Print</label>
+            <label><input type='checkbox' name='mcbvi_pub_preferecnce_braille'/>Braille</label>
+            <label><input type='checkbox' name='mcbvi_pub_preference_text'/>Computer Text files</label>
+            <label><input type='checkbox' name='mcbvi_pub_preference_email'/>E-mail.</label>
+        </p>
 
-<h2>Additional Contact Information</h2>
+        <p>I would like to receive the ACB Braille Forum in:</p>
+        <p>
+            <label><input type='checkbox' name='acb_forum_pub_preference_cassette'/>Cassette</label>
+            <label><input type='checkbox' name='acb_forum_pub_preference_large_print'/>Large Print</label>
+            <label><input type='checkbox' name='acb_forum_pub_preferecnce_braille'/>Braille</label>
+            <label><input type='checkbox' name='acb_forum_pub_preference_text'/>Computer Text files</label>
+            <label><input type='checkbox' name='acb_forum_pub_preference_email'/>E-mail.</label>
+        </p>
+      
+     </fieldset>
 
-<p>
-    <label><input type='checkbox' name='provide_information_to'/>
-    Please contact and provide additional information to the individual, Business, Church, Hospital, nursing home, or agency I have also identified here.</label>
-</p>
-
-<p>
-    <label>Contact/Organization Name<input name='additional_contact' id='AdditionalContact'/></label>
-</p>
-
-<p>
-    <label>Address <input name='additional_contact_address' id='AdditionalContactAddress'/></label>
-</p>
-
-<p>
-    <label>City <input name='additional_contact_city' id='AdditionalContactCity'/></label>
-    <label>Zip Code <input name='additional_contact_zip' id='AdditionalContactZip'/></label>
-</p>
-
-<p>
-    <label>Phone <input name='additional_contact_phone' id='AdditionalContactPhone'/></label>
-    <label>Email (Optional)<input type='tel' name='additional_contact_phone' id='AdditionalContactPhone'/></label>
-</p>
-
-<h2>Membership</h2>
-
-<p>
-    <p>General "At Large" Membership is only $10</p>
-    <label><input type='checkbox' name='check_payment_enclosed'/>I am sending my annual dues by check or money order</label>
-    <p>Make checks payable to the MCBVI in the amount of $10</p>
-</p>
-
-<p>
-    <label><input type='checkbox' name='check_online_payment'/>I will pay online</label>
-</p>
-
-<h2>Publication Format Preference</h2>
-
-<p>I prefer and read publications in:</p>
-
-<p>
-    <label><input type='checkbox' name='publication_preference_cassette'/>Cassette</label>
-    <label><input type='checkbox' name='publication_preference_large_print'/>Large Print</label>
-    <label><input type='checkbox' name='publication_preferecnce_braille'/>Braille</label>
-    <label><input type='checkbox' name='publication_preference_text'/>Computer Text files</label>
-    <label><input type='checkbox' name='publication_preference_email'/>E-mail.</label>
-</p>
-
-<p>
-    <label><input type='checkbox' name='receipt_requested'/>Please return receipt for my tax deductible contribution.</label>
-</p>
-
-
-<h2>Payment Information</h2>
-
-
-<p>Submit Form and Pay now by Paypal </p>
-<input type='submit' value='Submit Form and Pay'/>
-<p>Print and Return your MCBVI dues and completed membership application to:</p>
-
-<p>
-    All Needs Accounting<br/>
-    Matt Livingston, Treasurer<br/>
-    7751 Lakeshore Road<br />
-    Lakeport, MI 48059
-</p>
-
-<p>
-    Learn more about local chapters by calling toll free to 1 888 956-2284, that’s 1 888 95M-CBVI.
-</p>
-<p>Check out website at <a href='http://blindmi.org/'>http://blindmi.org</a></p>
-<p>Thank You.</p>
-
+    <fieldset>
+        <legend>Payment Information</legend>
+        <p>General "At Large" Membership is only $10</p>
+        <label><input type='checkbox' name='check_payment_enclosed'/>I am sending my annual dues by check or money order</label>
+        <p>Make checks payable to the MCBVI in the amount of $10</p>
+        <label><input type='checkbox' name='check_online_payment'/>I will pay online</label>
+         <p>
+             <label><input type='checkbox' name='receipt_requested'/>Please return receipt for my tax deductible contribution.</label>
+        </p>
+        <p>Submit Form and Pay now by Paypal </p>
+        <input type='submit' value='Submit Form and Pay'/>
+        <p>Print and Return your MCBVI dues and completed membership application to:</p>
+        <p>
+            All Needs Accounting<br/>
+             Matt Livingston, Treasurer<br/>
+            7751 Lakeshore Road<br />
+            Lakeport, MI 48059
+        </p>
+        
+        <input type='button' value='print' onclick='window.print();return false;'/>
+    </fieldset>
 </form>
+
 </div>
 </body>
 </html>
